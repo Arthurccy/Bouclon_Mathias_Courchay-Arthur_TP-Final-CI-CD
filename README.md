@@ -123,7 +123,9 @@ Points attendus:
 | Membre | Contributions |
 | --- | --- |
 | Arthur Courchay | Modèle `Task`, routes REST Express, validation métier, tests Jest sur les endpoints critiques, Dockerfile API non-root, rédaction des sections API/qualité du README |
+
 | Mathias | Docker Compose, intégration MongoDB/Nginx, Jenkins comme service Docker, préparation des credentials Jenkins, webhook GitHub, captures Jenkins pour le rapport |
+
 | Binôme | Relecture croisée, correction ESLint, test du build rouge volontaire, validation `docker compose up`, finalisation du rapport PDF |
 
 Cette répartition doit rester cohérente avec ce que chacun sait expliquer à l'oral: chaque membre doit pouvoir présenter l'ensemble du pipeline, même si certaines parties ont un référent principal.
