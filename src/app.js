@@ -3,6 +3,7 @@ const taskRoutes = require('./routes/taskRoutes');
 const packageInfo = require('../package.json');
 
 const app = express();
+var lintFailureDemo = 'intentional lint failure';
 
 app.use(express.json());
 
