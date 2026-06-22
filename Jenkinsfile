@@ -63,8 +63,8 @@ pipeline {
                             echo "MONGO_URI=${JENKINS_MONGO_URI}" >> .env
                         fi
 
-                        docker compose up -d --remove-orphans
-                        docker compose ps
+                        docker compose up -d --remove-orphans mongodb api nginx
+                        docker compose ps mongodb api nginx
                     '''
                 }
             }
