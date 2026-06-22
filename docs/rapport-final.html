@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Rapport final CI/CD - TaskFlow API</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #172033;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      background: #ffffff;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 10px;
+      line-height: 1.15;
+      color: #0f172a;
+    }
+
+    h1 {
+      font-size: 32pt;
+      letter-spacing: .2px;
+    }
+
+    h2 {
+      padding-bottom: 6px;
+      border-bottom: 2px solid #2563eb;
+      font-size: 18pt;
+      margin-top: 8px;
+    }
+
+    h3 {
+      font-size: 13pt;
+      margin-top: 16px;
+    }
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    ul {
+      margin: 6px 0 10px 18px;
+      padding: 0;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9pt;
+    }
+
+    pre {
+      margin: 8px 0 12px;
+      padding: 10px;
+      color: #dbeafe;
+      background: #0f172a;
+      border-radius: 6px;
+      white-space: pre-wrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #d8dee9;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #0f172a;
+      background: #eef4ff;
+      font-weight: 700;
+    }
+
+    .page {
+      min-height: auto;
+      margin-bottom: 8mm;
+      page-break-after: auto;
+      position: relative;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 267mm;
+      padding: 8mm 0;
+      page-break-after: always;
+    }
+
+    .cover-top {
+      border-left: 8px solid #2563eb;
+      padding-left: 18px;
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: #2563eb;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      font-size: 15pt;
+      color: #475569;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .meta-card {
+      padding: 12px;
+      border: 1px solid #d8dee9;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .meta-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: #1d4ed8;
+      background: #dbeafe;
+      font-weight: 700;
+      font-size: 9pt;
+    }
+
+    .callout {
+      margin: 10px 0 14px;
+      padding: 10px 12px;
+      border-left: 4px solid #2563eb;
+      background: #eff6ff;
+      border-radius: 4px;
+    }
+
+    .success {
+      border-left-color: #16a34a;
+      background: #ecfdf5;
+    }
+
+    .warning {
+      border-left-color: #f97316;
+      background: #fff7ed;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      padding: 10px;
+      border: 1px solid #d8dee9;
+      border-radius: 8px;
+      background: #ffffff;
+      page-break-inside: avoid;
+    }
+
+    .figure {
+      margin: 10px 0 16px;
+      page-break-inside: avoid;
+    }
+
+    .figure img {
+      display: block;
+      width: 100%;
+      max-height: 170mm;
+      object-fit: contain;
+      border: 1px solid #d8dee9;
+      border-radius: 6px;
+      background: #f8fafc;
+    }
+
+    .figure.small img {
+      max-height: 95mm;
+    }
+
+    .caption {
+      margin-top: 5px;
+      color: #475569;
+      font-size: 9pt;
+      font-style: italic;
+    }
+
+    .toc a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-note {
+      color: #64748b;
+      font-size: 9pt;
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-top">
+      <div class="eyebrow">M1 DEVFLSTK - CI/CD</div>
+      <h1>TaskFlow API<br>Pipeline Jenkins CI/CD</h1>
+      <p class="subtitle">Rapport final - Projet DevOps Docker, MongoDB, Nginx et Jenkins</p>
+      <div class="badge-row">
+        <span class="badge">Node.js + Express</span>
+        <span class="badge">MongoDB</span>
+        <span class="badge">Docker Compose</span>
+        <span class="badge">Jenkins Declarative Pipeline</span>
+        <span class="badge">Couverture 93.05%</span>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-card">
+        <strong>Binôme</strong>
+        Arthur Courchay<br>
+        Mathias Bouclon
+      </div>
+      <div class="meta-card">
+        <strong>Date</strong>
+        22 juin 2026
+      </div>
+      <div class="meta-card">
+        <strong>Repository GitHub</strong>
+        https://github.com/Arthurccy/Bouclon_Mathias_Courchay-Arthur_TP-Final-CI-CD
+      </div>
+      <div class="meta-card">
+        <strong>Livrable</strong>
+        API REST conteneurisée, pipeline Jenkins, rapport PDF et preuves d'exécution.
+      </div>
+    </div>
+
+    <p class="footer-note">Projet réalisé dans le cadre du module CI/CD - Caplogy / YNOV.</p>
+  </section>
+
+  <section class="page">
+    <h2>1. Synthèse du projet</h2>
+    <p>
+      TaskFlow API est une API REST de gestion de tâches créée spécifiquement pour le projet final CI/CD.
+      L'objectif était de partir d'une application simple, puis de l'industrialiser comme un livrable professionnel:
+      tests automatisés, lint strict, conteneurisation, orchestration, reverse proxy et pipeline Jenkins complet.
+    </p>
+
+    <div class="callout success">
+      <strong>Résultat principal:</strong> le pipeline Jenkins exécute les 6 stages attendus
+      (<code>Checkout</code>, <code>Install</code>, <code>Lint</code>, <code>Test</code>,
+      <code>Build Docker</code>, <code>Deploy</code>) et déploie l'application via Docker Compose.
+    </div>
+
+    <h3>Objectifs couverts</h3>
+    <table>
+      <tr><th>Zone</th><th>Réalisation</th></tr>
+      <tr><td>Application</td><td>API Express avec 6 routes REST, modèle Mongoose, validation métier.</td></tr>
+      <tr><td>Qualité</td><td>ESLint strict, 14 tests Jest, couverture globale 93.05%.</td></tr>
+      <tr><td>Infrastructure</td><td>Dockerfile multi-stage, Docker Compose, MongoDB, Nginx, réseau dédié.</td></tr>
+      <tr><td>CI/CD</td><td>Jenkins en service Docker, credentials, build Docker tagué, déploiement automatisé.</td></tr>
+      <tr><td>Sécurité</td><td>Aucun secret dans le code, <code>.env</code> ignoré, MongoDB non exposé.</td></tr>
+    </table>
+
+    <h3>Sommaire</h3>
+    <ol class="toc">
+      <li>Architecture globale</li>
+      <li>Application TaskFlow API</li>
+      <li>Docker, Compose et Nginx</li>
+      <li>Pipeline Jenkins</li>
+      <li>Preuves d'exécution</li>
+      <li>Build rouge intentionnel</li>
+      <li>Répartition du binôme</li>
+      <li>Difficultés rencontrées</li>
+    </ol>
+  </section>
+
+  <section class="page">
+    <h2>2. Architecture globale</h2>
+    <p>
+      L'architecture repose sur un flux simple: l'utilisateur passe par Nginx, qui relaie les requêtes vers l'API
+      Express. L'API communique avec MongoDB sur un réseau Docker interne. Jenkins orchestre la chaîne CI/CD
+      à partir du repository GitHub.
+    </p>
+
+    <pre>GitHub
+  |
+  | push / webhook
+  v
+Jenkins :8080
+  |
+  | Checkout -> Install -> Lint -> Test -> Build Docker -> Deploy
+  v
+Docker Compose
+
+Utilisateur -> localhost:80 -> Nginx -> API Express :5000 -> MongoDB :27017
+                                      réseau interne: taskflow-network</pre>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Flux applicatif</h3>
+        <ul>
+          <li>Nginx expose le port <code>80</code>.</li>
+          <li>L'API reste accessible uniquement dans Docker sur le port <code>5000</code>.</li>
+          <li>MongoDB reste interne au réseau Docker.</li>
+          <li>Les routes <code>/health</code> et <code>/api/tasks</code> sont servies via Nginx.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Flux CI/CD</h3>
+        <ul>
+          <li>Jenkins récupère le code depuis GitHub.</li>
+          <li>Le pipeline bloque en cas d'erreur ESLint ou Jest.</li>
+          <li>L'image API est taguée en <code>latest</code> et <code>build-N</code>.</li>
+          <li>Le déploiement est effectué par <code>docker compose up</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="figure">
+      <img src="../src/img/CAPTURE_Liste_Containeur.png" alt="Liste des conteneurs Docker TaskFlow">
+      <div class="caption">Figure 1 - Conteneurs Docker TaskFlow avec Jenkins, Nginx, API et MongoDB.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>3. Application TaskFlow API</h2>
+    <p>
+      L'API a été développée en Node.js avec Express. Elle permet de gérer des tâches avec un modèle volontairement
+      simple, mais suffisant pour démontrer une chaîne CI/CD complète et testable.
+    </p>
+
+    <h3>Modèle de données</h3>
+    <table>
+      <tr><th>Champ</th><th>Type</th><th>Règle</th></tr>
+      <tr><td><code>title</code></td><td>String</td><td>Obligatoire, trim automatique.</td></tr>
+      <tr><td><code>description</code></td><td>String</td><td>Optionnel, valeur par défaut vide.</td></tr>
+      <tr><td><code>status</code></td><td>String</td><td>Enum: <code>todo</code>, <code>in-progress</code>, <code>done</code>.</td></tr>
+      <tr><td><code>createdAt</code></td><td>Date</td><td>Généré automatiquement.</td></tr>
+    </table>
+
+    <h3>Routes REST</h3>
+    <table>
+      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
+      <tr><td>GET</td><td><code>/health</code></td><td>Retourne l'état de l'API, l'uptime et la version.</td></tr>
+      <tr><td>GET</td><td><code>/api/tasks</code></td><td>Liste les tâches.</td></tr>
+      <tr><td>POST</td><td><code>/api/tasks</code></td><td>Crée une tâche.</td></tr>
+      <tr><td>GET</td><td><code>/api/tasks/:id</code></td><td>Retourne une tâche par identifiant.</td></tr>
+      <tr><td>PUT</td><td><code>/api/tasks/:id</code></td><td>Met à jour le statut.</td></tr>
+      <tr><td>DELETE</td><td><code>/api/tasks/:id</code></td><td>Supprime une tâche.</td></tr>
+    </table>
+
+    <div class="figure small">
+      <img src="../src/img/CAPTURE_Curl_Status.png" alt="Vérification curl health et api tasks">
+      <div class="caption">Figure 2 - Vérification des endpoints <code>/health</code> et <code>/api/tasks</code>.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>4. Tests et qualité logicielle</h2>
+    <p>
+      Les tests Jest couvrent les comportements demandés dans les consignes: health-check, validation du titre,
+      liste des tâches et scénario d'intégration création/récupération. Des cas complémentaires ont été ajoutés
+      pour couvrir les erreurs et les mises à jour.
+    </p>
+
+    <div class="callout success">
+      La suite contient 14 tests verts. La couverture globale est de 93.05% sur les statements,
+      90.9% sur les branches et 100% sur les fonctions.
+    </div>
+
+    <h3>Approche de test</h3>
+    <ul>
+      <li>Tests HTTP réalisés avec <code>supertest</code>.</li>
+      <li>MongoDB réel non requis pendant les tests.</li>
+      <li>Modèle <code>Task</code> mocké avec Jest.</li>
+      <li>Pipeline bloquant si un test échoue.</li>
+    </ul>
+
+    <div class="figure">
+      <img src="../src/img/CAPTURE_Test_Jest.png" alt="Résultat des tests Jest">
+      <div class="caption">Figure 3 - Exécution Jest et couverture de tests.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>5. Docker, Compose et Nginx</h2>
+    <p>
+      L'application est conteneurisée avec un Dockerfile multi-stage. Le stage <code>builder</code> installe les
+      dépendances nécessaires au build, tandis que le stage <code>production</code> installe uniquement les
+      dépendances de production et exécute l'application avec un utilisateur non-root.
+    </p>
+
+    <h3>Choix Docker</h3>
+    <table>
+      <tr><th>Élément</th><th>Décision</th><th>Justification</th></tr>
+      <tr><td>Image</td><td><code>node:18-alpine</code></td><td>Base légère conforme aux consignes.</td></tr>
+      <tr><td>Multi-stage</td><td><code>builder</code> + <code>production</code></td><td>Sépare devDependencies et runtime.</td></tr>
+      <tr><td>Sécurité</td><td>Utilisateur <code>taskflow</code></td><td>Évite l'exécution root en production.</td></tr>
+      <tr><td>Healthcheck</td><td><code>/health</code></td><td>Permet à Compose et Jenkins de vérifier l'API.</td></tr>
+    </table>
+
+    <h3>Orchestration</h3>
+    <ul>
+      <li><code>mongodb</code>: base de données avec volume nommé <code>mongodb_data</code>.</li>
+      <li><code>api</code>: service Express, dépend de MongoDB healthy.</li>
+      <li><code>nginx</code>: reverse proxy exposé sur le port <code>80</code>.</li>
+      <li><code>jenkins</code>: service CI/CD exposé sur le port <code>8080</code>.</li>
+    </ul>
+
+    <div class="figure small">
+      <img src="../src/img/CAPTURE_DockerStatus.png" alt="Status Docker après déploiement">
+      <div class="caption">Figure 4 - État Docker après déploiement de la stack.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>6. Pipeline Jenkins</h2>
+    <p>
+      Le pipeline est écrit en syntaxe Declarative et versionné à la racine du dépôt dans le fichier
+      <code>Jenkinsfile</code>. Il automatise la validation du code et le déploiement de la stack.
+    </p>
+
+    <table>
+      <tr><th>Stage</th><th>Commande principale</th><th>Rôle</th></tr>
+      <tr><td>Checkout</td><td><code>checkout scm</code></td><td>Récupérer le code GitHub.</td></tr>
+      <tr><td>Install</td><td><code>npm ci</code></td><td>Installer les dépendances reproductiblement.</td></tr>
+      <tr><td>Lint</td><td><code>npm run lint</code></td><td>Bloquer le pipeline en cas de violation ESLint.</td></tr>
+      <tr><td>Test</td><td><code>npm test</code></td><td>Lancer Jest et afficher la couverture.</td></tr>
+      <tr><td>Build Docker</td><td><code>docker build</code></td><td>Construire <code>latest</code> et <code>build-N</code>.</td></tr>
+      <tr><td>Deploy</td><td><code>docker compose up</code></td><td>Déployer MongoDB, API et Nginx.</td></tr>
+    </table>
+
+    <div class="callout">
+      Le secret <code>MONGO_URI</code> est injecté via Jenkins Credentials avec l'ID <code>mongo-uri</code>.
+      Aucun secret n'est présent dans le Jenkinsfile ou dans le dépôt.
+    </div>
+
+    <div class="figure">
+      <img src="../src/img/CAPTURE_PIpeline.png" alt="Stage View Jenkins verte">
+      <div class="caption">Figure 5 - Stage View Jenkins avec pipeline vert.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>7. Configuration Jenkins</h2>
+    <p>
+      Jenkins est lancé comme service Docker et utilise une image dédiée basée sur
+      <code>jenkins/jenkins:lts-jdk17</code>. Cette image installe Docker CLI, Docker Compose, Node/npm et les
+      plugins nécessaires au pipeline.
+    </p>
+
+    <div class="grid-2">
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Instalation.png" alt="Installation Jenkins">
+        <div class="caption">Figure 6 - Installation de Jenkins et plugins.</div>
+      </div>
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Page_Accueil.png" alt="Accueil Jenkins">
+        <div class="caption">Figure 7 - Jenkins accessible sur <code>localhost:8080</code>.</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Credentials.png" alt="Credentials Jenkins">
+        <div class="caption">Figure 8 - Credential Jenkins <code>mongo-uri</code>.</div>
+      </div>
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Parametre_General.png" alt="Paramétrage du job Jenkins">
+        <div class="caption">Figure 9 - Configuration du job pipeline depuis GitHub.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>8. Preuves de pipeline et déploiement</h2>
+    <p>
+      Le pipeline final exécute les contrôles qualité, construit les images Docker et déploie la stack applicative.
+      Les preuves ci-dessous montrent la réussite des tests et le résultat observable côté Docker.
+    </p>
+
+    <div class="grid-2">
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Verif_Tests.png" alt="Vérification des tests">
+        <div class="caption">Figure 10 - Vérification des tests et du lint.</div>
+      </div>
+      <div class="figure small">
+        <img src="../src/img/CAPTURE_Connection_Mango_Jet.png" alt="Connexion MongoDB et API">
+        <div class="caption">Figure 11 - Validation de la connexion applicative avec MongoDB.</div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      Les endpoints <code>/health</code> et <code>/api/tasks</code> retournent des réponses JSON valides via
+      Nginx. MongoDB n'est pas exposé à l'extérieur.
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>9. Build rouge intentionnel</h2>
+    <p>
+      Un build rouge a été provoqué volontairement pour vérifier que le pipeline échoue bien au stage
+      <code>Lint</code>. La violation introduite était simple et contrôlée: utilisation de <code>var</code> et
+      variable inutilisée. ESLint a bloqué le pipeline, puis un commit correctif a restauré l'état vert.
+    </p>
+
+    <table>
+      <tr><th>Étape</th><th>Commit</th><th>Résultat</th></tr>
+      <tr><td>Violation volontaire</td><td><code>test: trigger intentional lint failure</code></td><td>Échec au stage <code>Lint</code>.</td></tr>
+      <tr><td>Correction</td><td><code>fix: restore lint compliance</code></td><td>Pipeline repassé au vert.</td></tr>
+    </table>
+
+    <div class="figure">
+      <img src="../src/img/CAPTURE_Build_Rouge.png" alt="Build rouge intentionnel Jenkins">
+      <div class="caption">Figure 12 - Build rouge intentionnel au stage Lint.</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>10. Répartition du binôme</h2>
+    <p>
+      La répartition a été pensée pour rester équilibrée et réaliste: chaque membre a un périmètre principal,
+      mais le binôme a relu et validé l'ensemble du projet afin que chacun puisse l'expliquer.
+    </p>
+
+    <table>
+      <tr><th>Membre</th><th>Responsabilités principales</th><th>Livrables associés</th></tr>
+      <tr>
+        <td>Arthur Courchay</td>
+        <td>Développement API, modèle Task, validation métier, tests Jest, lint, Dockerfile API.</td>
+        <td>Routes REST, contrôleurs, tests, couverture, README technique.</td>
+      </tr>
+      <tr>
+        <td>Mathias Bouclon</td>
+        <td>Infrastructure Docker Compose, Nginx, Jenkins, credentials, captures et webhook.</td>
+        <td>Stack Docker, reverse proxy, configuration Jenkins, preuves du pipeline.</td>
+      </tr>
+      <tr>
+        <td>Binôme</td>
+        <td>Relecture, résolution des blocages, build rouge volontaire, rapport final.</td>
+        <td>Pipeline vert, documentation, captures, soutenance.</td>
+      </tr>
+    </table>
+
+    <div class="callout">
+      Les deux membres sont capables d'expliquer l'ensemble du flux: requête HTTP, passage par Nginx,
+      API Express, MongoDB, puis chaîne Jenkins jusqu'au déploiement.
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>11. Difficultés rencontrées et solutions</h2>
+    <table>
+      <tr><th>Difficulté</th><th>Symptôme</th><th>Solution</th></tr>
+      <tr>
+        <td>Conflit de ports avec un ancien TP</td>
+        <td>Les ports <code>80</code> et <code>8080</code> étaient déjà utilisés par ProShop.</td>
+        <td>Arrêt des conteneurs ProShop avant lancement de TaskFlow.</td>
+      </tr>
+      <tr>
+        <td>Jenkins sans Node/npm</td>
+        <td>Le stage <code>Install</code> ne pouvait pas exécuter <code>npm ci</code>.</td>
+        <td>Ajout de Node/npm dans <code>Dockerfile.jenkins</code>.</td>
+      </tr>
+      <tr>
+        <td>Conflit de noms Docker</td>
+        <td>Jenkins ne pouvait pas créer <code>taskflow-mongodb</code> déjà présent.</td>
+        <td>Suppression des <code>container_name</code> fixes et ajout d'un projet Compose stable.</td>
+      </tr>
+      <tr>
+        <td>Montage Nginx depuis Jenkins</td>
+        <td>Le bind mount de <code>nginx.conf</code> échouait depuis le workspace Jenkins.</td>
+        <td>Création d'une image <code>taskflow-nginx</code> avec la config copiée au build.</td>
+      </tr>
+      <tr>
+        <td>Validation du build rouge</td>
+        <td>Il fallait prouver que le pipeline échoue réellement au lint.</td>
+        <td>Commit volontaire avec violation ESLint, capture du build rouge, puis correction.</td>
+      </tr>
+    </table>
+
+    <h2>12. Conclusion</h2>
+    <p>
+      Le projet répond aux objectifs du sujet: application créée par le binôme, conteneurisation complète,
+      orchestration avec Docker Compose, reverse proxy Nginx, pipeline Jenkins versionné, tests automatisés et
+      gestion des secrets via credentials. Les captures prouvent à la fois le fonctionnement nominal et les
+      mécanismes de blocage qualité attendus en CI/CD.
+    </p>
+
+    <div class="callout success">
+      TaskFlow API est clonable, compréhensible depuis le README, testable localement et déployable par Jenkins.
+    </div>
+  </section>
+</body>
+</html>
