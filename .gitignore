@@ -1,0 +1,10 @@
+.env
+node_modules/
+coverage/
+npm-debug.log*
+.DS_Store
+.idea/
+.vscode/
+.agents/
+Projet_Final_CICD_Consignes.pdf
+Projet_Final_CICD_Grille.pdf

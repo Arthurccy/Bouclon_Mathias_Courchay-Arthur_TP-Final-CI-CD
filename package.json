@@ -1,0 +1,30 @@
+{
+  "name": "taskflow-api",
+  "version": "1.0.0",
+  "description": "TaskFlow API - projet final CI/CD Jenkins.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "eslint . --max-warnings=0",
+    "test": "jest --coverage --runInBand"
+  },
+  "keywords": [
+    "taskflow",
+    "cicd",
+    "jenkins",
+    "docker"
+  ],
+  "author": "Arthur Courchay",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "jest": "^30.4.2",
+    "supertest": "^7.0.0"
+  }
+}
